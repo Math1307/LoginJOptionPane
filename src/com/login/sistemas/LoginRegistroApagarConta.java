@@ -5,7 +5,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -28,20 +27,22 @@ public class LoginRegistroApagarConta {
 			if (informaUsuarioNovamente.equals("")) {
 				informaUsuario = JOptionPane.showInputDialog(null, "Digite um usuário", "Registrar",
 						JOptionPane.QUESTION_MESSAGE);
-				if (informaUsuario.trim().isEmpty()) {
+				if(informaUsuario == null) {
+					System.exit(0);
+				} else if (informaUsuario.trim().isEmpty()) {
 					informaUsuarioNovamente = JOptionPane.showInputDialog(null,
 							"Erro! Seu usário não pode ficar em branco! \nTente Novamente!", "Erro!",
 							JOptionPane.ERROR_MESSAGE);
 					registrar(informaUsuarioNovamente);
-				}
+				} 
 			}
 
-			boolean bancoDeLoginsExiste = (new File("src\\\\com\\\\BancoDeLogins").isDirectory());
+			boolean bancoDeLoginsExiste = (new File("C:\\BancoDeLogins").isDirectory());
 			if (!bancoDeLoginsExiste) {
-				new File("src\\com\\BancoDeLogins").mkdir();
+				new File("C:\\BancoDeLogins").mkdir();
 			}
 			if (!informaUsuario.trim().isEmpty()) {
-				String usuario = "src\\com\\BancoDeLogins\\" + informaUsuario + ".dat";
+				String usuario = "C:\\BancoDeLogins\\" + informaUsuario + ".dat";
 
 				if (!(new File(usuario).exists())) {
 					boolean senhaEmBrancoMenorOito = false;
@@ -49,7 +50,9 @@ public class LoginRegistroApagarConta {
 						String informaSenha = JOptionPane.showInputDialog(null,
 								"Bem-Vindo " + informaUsuario + "\nDigite uma senha", "Criação de Senha",
 								JOptionPane.QUESTION_MESSAGE);
-						if (!informaSenha.trim().isEmpty()) {
+						if (informaSenha == null) {
+							System.exit(0);
+						} else if (!informaSenha.trim().isEmpty()) {
 							senhaEmBrancoMenorOito = false;
 							if (informaSenha.length() >= 8) {
 								boolean senhaNaoCoincide = false;
@@ -57,7 +60,9 @@ public class LoginRegistroApagarConta {
 									String confirmaSenha = JOptionPane.showInputDialog(null, "Confirme sua senha",
 											"Confirmação de Senha", JOptionPane.QUESTION_MESSAGE);
 
-									if (informaSenha.equals(confirmaSenha)) {
+									if (confirmaSenha == null) {
+										System.exit(0);
+									} else if (informaSenha.equals(confirmaSenha)) {
 										JOptionPane.showMessageDialog(
 												null, "Registrado com sucesso! \nUsuário: " + informaUsuario
 														+ "\nSenha: " + informaSenha,
@@ -108,9 +113,11 @@ public class LoginRegistroApagarConta {
 			usuarioLogin = JOptionPane.showInputDialog(null, "Digite seu usuário", "Login",
 					JOptionPane.QUESTION_MESSAGE);
 
-			String arquivoUsuario = "src\\com\\BancoDeLogins\\" + usuarioLogin + ".dat";
+			String arquivoUsuario = "C:\\BancoDeLogins\\" + usuarioLogin + ".dat";
 
-			if ((new File(arquivoUsuario).exists())) {
+			if (usuarioLogin == null) {
+				System.exit(0);
+			} else if ((new File(arquivoUsuario).exists())) {
 				carregarRegistro = new FileInputStream(arquivoUsuario);
 				lerRegistro = new DataInputStream(carregarRegistro);
 				boolean senhaIncorreta = false;
@@ -120,7 +127,9 @@ public class LoginRegistroApagarConta {
 					String informaSenha = JOptionPane.showInputDialog(null, "Bem-Vindo " + nome + "\nDigite sua senha",
 							"Senha", JOptionPane.QUESTION_MESSAGE);
 
-					if (informaSenha.equals(senha)) {
+					if (informaSenha == null) {
+						System.exit(0);
+					} else if (informaSenha.equals(senha)) {
 						JOptionPane.showMessageDialog(null, "Logado com sucesso!", "Sucesso!",
 								JOptionPane.INFORMATION_MESSAGE);
 						return true;
@@ -147,19 +156,24 @@ public class LoginRegistroApagarConta {
 			usuario = JOptionPane.showInputDialog(null, "Digite seu usuário", "Apagar Conta",
 					JOptionPane.QUESTION_MESSAGE);
 
-			String arquivoUsuario = "src\\com\\BancoDeLogins\\" + usuario + ".dat";
+			String arquivoUsuario = "C:\\BancoDeLogins\\" + usuario + ".dat";
 
-			if ((new File(arquivoUsuario).exists())) {
+			if (usuario == null) {
+				System.exit(0);
+			} else if ((new File(arquivoUsuario).exists())) {
 				carregarRegistro = new FileInputStream(arquivoUsuario);
 				lerRegistro = new DataInputStream(carregarRegistro);
 				boolean senhaIncorreta = false;
+				@SuppressWarnings("unused")
 				String nome = lerRegistro.readUTF();
 				String senha = lerRegistro.readUTF();
 				do {
 					String informaSenha = JOptionPane.showInputDialog(null, "Para apagar sua conta \nDigite sua senha",
 							"Apagar Conta", JOptionPane.QUESTION_MESSAGE);
 
-					if (informaSenha.equals(senha)) {
+					if (informaSenha == null) {
+						System.exit(0);
+					} else if (informaSenha.equals(senha)) {
 						senhaIncorreta = false;
 						arquivo = new File(arquivoUsuario);
 						
