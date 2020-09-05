@@ -16,17 +16,14 @@ public class TelaInicial {
 		
 		if(opcaoEscolhida == 0) {
 			sucesso = LoginRegistroApagarConta.login("");
-			if(sucesso) {
-				JOptionPane.showMessageDialog(null, "Bem-Vindo brodi");
-			}
 		} else if(opcaoEscolhida == 1) {
 			sucesso = LoginRegistroApagarConta.registrar("");
-			
-			if(sucesso) {
-				JOptionPane.showMessageDialog(null, "Bem-Vindo brodi");
-			}
 		} else if(opcaoEscolhida == 2) {
 			LoginRegistroApagarConta.apagarConta();
+		}
+		
+		if(sucesso) {
+			JOptionPane.showMessageDialog(null, "Esse foi o estudo feito.");
 		}
 		
 		} while(menuInicial);
